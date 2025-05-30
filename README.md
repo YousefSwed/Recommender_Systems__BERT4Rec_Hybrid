@@ -8,7 +8,6 @@ This project implements a hybrid version of BERT4Rec for sequential recommendati
 
 ```plaintext
 Final_project/
-├── BERT4Rec_model.py              # Category-only BERT4Rec
 ├── BERT4Rec_hybrid_title.py       # Full hybrid model with title embeddings
 ├── config.py                      # Global configuration settings
 ├── data_preprocessing.py          # Data loader and train/val splitter
@@ -18,9 +17,10 @@ Final_project/
 ├── main.py                        # Training/evaluation script
 ├── plot.py                        # Training curve and metric visualizations
 ├── train.py                       # Model training loop
+├── tune_hyperparameters.py        # Tuning hyperparameters
 ├── data_set/                      # Input data (train.csv, test.csv, item_meta.csv)
 ├── preprocessed_data/             # Saved sequences and embeddings
-└── results/                       # Model outputs and submissions (separated by model type)
+└── results/                       # Model outputs and submissions
 ```
 
 ---
@@ -60,13 +60,14 @@ All results are saved to subfolders in `results/{model_type}/`.
 - scikit-learn
 - sentence_transformers
 - tqdm
+- optuna
 
 ---
 
 ## 🛠️ Setup
 
 ```bash
-pip install torch pandas numpy matplotlib scikit-learn sentence_transformers tqdm
+pip install torch pandas numpy matplotlib scikit-learn sentence_transformers tqdm optuna
 ```
 
 ### Run on GPU (Optional)
@@ -105,6 +106,19 @@ python generate_submission.py --model hybrid_title
 
 ---
 
+## 🧪 Hyperparameter Tuning
+
+`tune_hyperparameters.py` uses [Optuna](https://optuna.org/) to automatically search for the best model hyperparameters (embedding size, number of layers, learning rate, etc.) based on validation NDCG@10.  
+Run:
+
+```bash
+python tune_hyperparameters.py
+```
+
+Best hyperparameters are saved to `results/best_hyperparams.json`.
+
+---
+
 ## 📊 Output
 
 Results and logs are saved to `results/hybrid_title/`:
@@ -125,17 +139,8 @@ Results and logs are saved to `results/hybrid_title/`:
 
 ## 📌 Notes
 
-- Truncates or pads user sequences to 20 items (Config.SEQ_LEN)
-- Supports metadata from `item_meta.csv` (main_category + title)
+- Values in `config.py` is the result of running `tune_hyperparameters.py`
+- Supports metadata from `item_meta.csv` (main_category, title, description, price, average_rating)
 - Trained using masked item prediction (MLM-style BERT loss)
-- Results directory is dynamically selected based on `--model` type
-
----
-
-## 🧩 Future Improvements
-
-- Incorporate additional metadata (e.g., brand, price)
-- Test with LightGCN and ensemble methods
-- Add real-time inference pipeline for deployment
 
 ---
