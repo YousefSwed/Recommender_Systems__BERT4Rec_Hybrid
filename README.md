@@ -35,18 +35,16 @@ Final_project/
 Select model using:
 
 ```bash
-python main.py --model category
+python main.py
 ```
 
 or
 
 ```bash
-python main.py --model hybrid_title
+python main.py
 ```
 
-> For `hybrid_title`, the title embeddings will be automatically generated.
-
-All results are saved to subfolders in `results/{model_type}/`.
+All results are saved to subfolders in `results/`.
 
 ---
 
@@ -121,12 +119,13 @@ Best hyperparameters are saved to `results/best_hyperparams.json`.
 
 ## 📊 Output
 
-Results and logs are saved to `results/hybrid_title/`:
+Results and logs are saved to `results/`:
 
 - `submission.csv` — predictions for top-10 items per user
 - `model_metrics.json` — final Recall/NDCG@k values
 - `model_performance.json` — epoch-wise training/val loss & metrics
 - `metrics_at_k.png` — evaluation metrics plot
+- `learning_curve.png` — plot for training and validation loss
 
 ---
 
