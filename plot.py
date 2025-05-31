@@ -57,7 +57,7 @@ def plot_learning_curves(result_dir):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model", choices=["category", "hybrid_title"], default="category")
+    parser.add_argument("--model", choices=["hybrid_title"], default="hybrid_title")
     args = parser.parse_args()
     result_dir = os.path.join(Config.RESULTS_DIR, args.model)
     plot_learning_curves(result_dir)

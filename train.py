@@ -32,8 +32,8 @@ def mask_items(seqs, num_items, mask_prob):
 
 # Training function
 def train_model(model, train_data, val_data, num_items, device, model_path, result_dir):
-    optimizer = optim.Adam(model.parameters(), lr=Config.LR)
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=3, min_lr=1e-6)
+    optimizer = optim.AdamW(model.parameters(), lr=Config.LR)
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=3, min_lr=1e-5)
     criterion = nn.CrossEntropyLoss(ignore_index=0)
     model.to(device)
 
@@ -78,12 +78,8 @@ def train_model(model, train_data, val_data, num_items, device, model_path, resu
         }
         history.append(log_entry)
 
-        # if val_ndcg > best_ndcg:
-        #     best_ndcg = val_ndcg
-        #     patience_counter = 0
-        #     torch.save(model.state_dict(), model_path)
-        if val_recall > best_recall:
-            best_recall = val_recall
+        if val_ndcg > best_ndcg:
+            best_ndcg = val_ndcg
             patience_counter = 0
             torch.save(model.state_dict(), model_path)
         else:
@@ -92,7 +88,7 @@ def train_model(model, train_data, val_data, num_items, device, model_path, resu
                 print("\nEarly stopping triggered.\n")
                 break
         
-        print(f"Epoch {epoch} | Train Loss: {log_entry['train_loss']:.4f} | Val Loss: {val_loss:.4f} | Recall@10: {val_recall:.4f} | NDCG@10: {val_ndcg:.4f} | Best Recall@10: {best_recall:.4f} | Patience counter: {patience_counter}\n")
+        print(f"Epoch {epoch} | Train Loss: {log_entry['train_loss']:.4f} | Val Loss: {val_loss:.4f} | Recall@10: {val_recall:.4f} | NDCG@10: {val_ndcg:.4f} | Best NDCG@10: {best_ndcg:.4f} | Patience counter: {patience_counter}\n")
         
         scheduler.step(val_ndcg)
 
