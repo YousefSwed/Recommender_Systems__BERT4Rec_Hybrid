@@ -25,7 +25,6 @@ def objective(trial):
     process_and_save()
 
     print("Preparing title embeddings...")
-    # subprocess.run(["./.venv/Scripts/python", "embed_titles.py"])
     generate_title_and_desc_embeddings()
     print("Title embeddings generated.\n")
 
@@ -55,7 +54,7 @@ def objective(trial):
         numeric_meta = pickle.load(f)
 
     # Model params
-    num_items = max(item_to_category.keys()) + 1  # or get from your config
+    num_items = max(item_to_category.keys()) + 1  # or get from config
 
     # Device
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -71,8 +70,8 @@ def objective(trial):
         embed_dim=embed_dim,
     )
 
-    # Use your training and evaluation functions
-    # For speed, you may want to set EPOCHS to a lower number during tuning
+    # Use training and evaluation functions
+    # For speed, may want to set EPOCHS to a lower number during tuning
     Config.BATCH_SIZE = batch_size
     Config.LR = lr
     Config.EMBED_DIM = embed_dim
@@ -80,11 +79,11 @@ def objective(trial):
     Config.NUM_LAYERS = num_layers
     Config.DROPOUT = dropout
     Config.SEQ_LEN = seq_len
-    Config.EPOCHS = 15  # or a lower number for faster tuning
+    Config.EPOCHS = 15
 
     print("\nTraining...\n")
 
-    # Train the model (save to a temp path, e.g. 'results/tmp.pt')
+    # Train the model
     train_model(
         model,
         train_data,
@@ -98,7 +97,7 @@ def objective(trial):
     # Evaluate
     val_metrics = evaluate_model(model, test_data, num_items, device, k_values=[10])
     ndcg10 = val_metrics['ndcg'][10]
-    # For Optuna, we want to maximize ndcg
+    # For Optuna, maximize ndcg
     return ndcg10
 
 if __name__ == "__main__":

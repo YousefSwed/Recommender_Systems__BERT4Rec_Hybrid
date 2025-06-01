@@ -64,7 +64,7 @@ def generate_submission():
                 if isinstance(top_items, int):
                     top_items = [top_items]
         top_items_str = ",".join(map(str, top_items))
-        # ID == user_id in this competition
+        # ID == user_id
         submission.append([user_id, user_id, top_items_str])
 
     # Save submission with required header

@@ -20,6 +20,3 @@ class Config:
     TEST_FILE = "data_set/test.csv"
     PROCESSED_DIR = "preprocessed_data/"
     RESULTS_DIR = "results/"
-
-
-# {'EMBED_DIM': 512, 'NUM_LAYERS': 4, 'NUM_HEADS': 4, 'DROPOUT': 0.1, 'LR': 0.00014767887032289816}

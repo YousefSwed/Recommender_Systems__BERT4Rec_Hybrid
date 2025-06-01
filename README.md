@@ -1,6 +1,6 @@
 # Hybrid BERT4Rec Recommender System
 
-This project implements a hybrid version of BERT4Rec for sequential recommendation, integrating both categorical metadata and BERT-based title embeddings to improve item representations.
+This project implements a hybrid version of BERT4Rec for sequential recommendation.
 
 ---
 
@@ -29,7 +29,6 @@ Final_project/
 
 ### Supported Architectures
 
-- `category`: BERT4Rec + item ID + category embedding
 - `hybrid_title`: BERT4Rec + item ID + category + BERT title embedding
 
 Select model using:

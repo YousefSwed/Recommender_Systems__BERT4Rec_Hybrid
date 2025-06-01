@@ -17,7 +17,6 @@ def load_pickle(file):
 
 
 def main():
-    # result_dir = os.path.join(Config.RESULTS_DIR, model_type)
     result_dir = Config.RESULTS_DIR
     model_path = os.path.join(result_dir, "best_model.pt")
     os.makedirs(Config.PROCESSED_DIR, exist_ok=True)
@@ -28,7 +27,6 @@ def main():
     print("Data processing complete.\n")
 
     print("Preparing title embeddings...")
-    # subprocess.run(["./.venv/Scripts/python", "embed_titles.py"])
     generate_title_and_desc_embeddings()
     print("Title embeddings generated.\n")
 
